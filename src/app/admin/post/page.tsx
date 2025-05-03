@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { SpinLoader } from '@/components/SpinLoader';
-import PostsListAdmin from '@/components/PostsListAdmin';
+import PostsListAdmin from '@/components/Admin/PostsListAdmin';
 
 export const dynamic = 'force-dynamic';
 

@@ -2,17 +2,17 @@
 
 import { drizzleDb } from '@/db/drizzle';
 import { postsTables } from '@/db/drizzle/schemas';
-import { postRepository } from '@/repositories/post';
 import { asyncDelay } from '@/utils/async-dalay';
 import { logColor } from '@/utils/log-color';
 import { eq } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
+import { findPostByIdAdmin } from '@/lib/post/queries/admin';
 
 export async function deletePostAction(id: string) {
   // TODO: checar login do user
 
   // TODO: remover linhas abaixo
-  await asyncDelay(1000);
+  await asyncDelay(500);
   logColor(id);
 
   if (!id || typeof id !== 'string') {
@@ -21,7 +21,7 @@ export async function deletePostAction(id: string) {
     };
   }
 
-  const post = await postRepository.findById(id).catch(() => undefined);
+  const post = await findPostByIdAdmin(id).catch(() => undefined);
 
   if (!post) {
     return {
