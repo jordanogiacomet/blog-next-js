@@ -12,34 +12,64 @@ export function ManagePostForm() {
   return (
     <form action='' className='mb-16'>
       <div className='flex flex-col gap-6'>
-        <InputText labelText='Nome' placeholder='Digite seu nome' />
-        <InputText labelText='Sobrenome' placeholder='Digite seu sobrenome' />
         <InputText
-          disabled
-          labelText='Sobrenome'
-          placeholder='Digite seu sobrenome'
-          defaultValue={'Com Texto'}
+          labelText='ID'
+          name='id'
+          placeholder='ID gerado automaticamente'
+          type='text'
+          defaultValue={''}
+          readOnly
+        />
+        <InputText
+          labelText='Slug'
+          name='slug'
+          placeholder='Slug gerada automaticamente'
+          type='text'
+          defaultValue={''}
+          readOnly
+        />
+        <InputText
+          labelText='Título'
+          name='title'
+          placeholder='Digite o título'
+          type='text'
+          defaultValue={''}
+        />
+
+        <InputText
+          labelText='Autor'
+          name='author'
+          placeholder='Digite o nome do autor'
+          type='text'
+          defaultValue={''}
+        />
+        <InputText
+          labelText='Resumo'
+          name='excerpt'
+          placeholder='Digite o resumo'
+          type='text'
+          defaultValue={''}
+        />
+        <MarkdownEditor
+          labelText='Conteúdo'
+          value={contentValue}
+          setValue={setContentValue}
+          textAreaName='content'
+          disabled={false}
         />
 
         <ImageUploader />
 
-        <InputCheckbox type='checkbox' />
-
-        <MarkdownEditor
-          labelText='Content'
-          disabled={false}
-          textAreaName='content'
-          value={contentValue}
-          setValue={setContentValue}
-        />
-
         <InputText
-          disabled
-          labelText='Sobrenome'
-          placeholder='Digite seu sobrenome'
-          defaultValue={'Read Only'}
-          readOnly
+          labelText='URL da imagem de capa'
+          name='excerpt'
+          placeholder='Digite a URL da imagem'
+          type='text'
+          defaultValue={''}
         />
+
+        <InputCheckbox labelText='Publicar?' name='published' type='checkbox' />
+
         <div>
           <Button type='submit' size='lg' className='w-full mt-6'>
             Enviar
