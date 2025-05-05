@@ -105,7 +105,7 @@ export function ManagePostForm({ publicPost }: ManagePostFormProps) {
         />
 
         <div className='mt-4'>
-          <Button className=' w-full' type='submit'>
+          <Button className=' w-full' type='submit' disabled={isPending}>
             Enviar
           </Button>
         </div>
