@@ -4,6 +4,7 @@ import { makePartialPublicPost, PublicPost } from '@/dto/post/dto';
 import { PostCreateSchema } from '@/lib/post/validations';
 import { PostModel } from '@/models/post/post-model';
 import { postRepository } from '@/repositories/post';
+import { asyncDelay } from '@/utils/async-dalay';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { makeSlugFromText } from '@/utils/make-slug-from-text';
 import { revalidateTag } from 'next/cache';
@@ -20,6 +21,8 @@ export async function createPostAction(
   prevState: CreatePostActionState,
   formData: FormData,
 ): Promise<CreatePostActionState> {
+  await asyncDelay(5000);
+
   if (!(formData instanceof FormData))
     return {
       formState: prevState.formState,
@@ -62,5 +65,5 @@ export async function createPostAction(
   }
 
   revalidateTag('posts');
-  redirect(`/admin/post/${newPost.id}`);
+  redirect(`/admin/post/${newPost.id}?created=1`);
 }

@@ -10,6 +10,8 @@ import { makePartialPublicPost, PublicPost } from '@/dto/post/dto';
 import { toast } from 'react-toastify';
 import { updatePostAction } from '@/app/actions/post/update-post-action';
 import { createPostAction } from '@/app/actions/post/create-post-action';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 type ManagePostFormUpdateProps = {
   mode: 'update';
@@ -26,6 +28,9 @@ type ManagePostFormProps =
 
 export function ManagePostForm(props: ManagePostFormProps) {
   const { mode } = props;
+  const searchParams = useSearchParams();
+  const created = searchParams.get('created');
+  const router = useRouter();
 
   let publicPost;
   if (mode === 'update') {
@@ -58,7 +63,17 @@ export function ManagePostForm(props: ManagePostFormProps) {
       toast.dismiss();
       toast.success('Post atualizado com sucesso!');
     }
-  }, [state.success]);
+  }, [state]);
+
+  useEffect(() => {
+    if (created === '1') {
+      toast.dismiss();
+      toast.success('Post criado com sucesso!');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('created');
+      router.replace(url.toString());
+    }
+  }, [created, router]);
 
   const { formState } = state;
   const [contentValue, setContentValue] = useState(publicPost?.content || '');
@@ -121,7 +136,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           disabled={isPending}
         />
 
-        <ImageUploader />
+        <ImageUploader disabled={isPending} />
 
         <InputText
           labelText='URL da imagem de capa'
@@ -141,7 +156,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
         />
 
         <div className='mt-4'>
-          <Button disabled={isPending} type='submit'>
+          <Button className='w-full' disabled={isPending} type='submit'>
             Enviar
           </Button>
         </div>

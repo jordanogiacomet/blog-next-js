@@ -7,6 +7,7 @@ import {
 } from '@/dto/post/dto';
 import { PostUpdateSchema } from '@/lib/post/validations';
 import { postRepository } from '@/repositories/post';
+import { asyncDelay } from '@/utils/async-dalay';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { revalidateTag } from 'next/cache';
 
@@ -20,6 +21,7 @@ export async function updatePostAction(
   prevState: UpdatePostActionState,
   formData: FormData,
 ): Promise<UpdatePostActionState> {
+  await asyncDelay(5000);
   if (!(formData instanceof FormData)) {
     return {
       formState: prevState.formState,
