@@ -11,6 +11,7 @@ export class DrizzlePostRepository implements PostRepository {
   async findAllPublic(): Promise<PostModel[]> {
     await asyncDelay(SIMULATE_WAIT_IN_MS, true);
     const posts = await drizzleDb.query.posts.findMany({
+      where: (posts, { not, eq }) => not(eq(posts.published, false)),
       orderBy: (posts, { desc }) => desc(posts.createdAt),
     });
     return posts;

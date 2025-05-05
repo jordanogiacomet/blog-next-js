@@ -1,7 +1,7 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
 import { postRepository } from '@/repositories/post';
+import { revalidateTag } from 'next/cache';
 
 export async function deletePostAction(id: string) {
   if (!id || typeof id !== 'string') {
@@ -18,14 +18,15 @@ export async function deletePostAction(id: string) {
       return {
         error: e.message,
       };
-      return {
-        error: 'Erro desconhecido',
-      };
     }
+
+    return {
+      error: 'Erro desconhecido',
+    };
   }
 
   revalidateTag('posts');
-  revalidateTag(`post-${post?.slug}`);
+  revalidateTag(`post-${post.slug}`);
 
   return {
     error: '',
